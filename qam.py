@@ -9,7 +9,7 @@ n = 4
 mode = 'grid'
 
 def split_bits(bits: list[int]) -> tuple[list[int]]:
-    ''' split list of bits in half (I-Q) '''
+    ''' split list of bits in half (I, Q) '''
     return bits[len(bits)//2:], bits[:len(bits)//2]
 
 def map_iq(i_bits: list[int], q_bits: list[int]) -> tuple[float]:
@@ -40,8 +40,8 @@ for a in product((0, 1), repeat=n):
     q_waves.append(Q * np.sin(time/10))
 
 
-# set up IQ and Sum plot axis for side-by-side plotting
 if mode != 'grid':
+    # set up IQ and Sum plot axis for side-by-side plotting
     num_plot_rows = 2**n
     ax_iq = [plt.subplot2grid((num_plot_rows, 2), (0, 0))]
     ax_sum = [plt.subplot2grid((num_plot_rows, 2), (0, 1))]
