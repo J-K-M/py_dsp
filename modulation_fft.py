@@ -6,8 +6,8 @@ bits_per_symbol = 2
 
 carrier_freq = 10
 symbol_rate = 5
-num_symbols = 50
-resolution = 1000
+num_symbols = 100
+resolution = 500
 
 
 samp_freq = resolution*carrier_freq
@@ -36,7 +36,7 @@ def generate_fsk_symbol(val):
 symbols = []
 for i in range(num_symbols):
     mod = np.random.randint(0, 2**bits_per_symbol)
-    symbols.append(generate_fsk_symbol(mod))
+    symbols.append(generate_ask_symbol(mod))
 
 
 sig = np.concatenate(symbols)
