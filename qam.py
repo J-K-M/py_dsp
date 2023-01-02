@@ -5,12 +5,8 @@ from itertools import product
 time = np.arange(0, 100 * np.pi)
 
 # Number of bits per QAM symbol
-n = 6
+n = 3
 mode = 'grid'
-
-def split_bits(bits: list[int]) -> tuple[list[int]]:
-    ''' split list of bits in half (I, Q) '''
-    return bits[len(bits)//2:], bits[:len(bits)//2]
 
 def map_iq(i_bits: list[int], q_bits: list[int]) -> tuple[float]:
     ''' takes in-phase and quadrature bits to generate an IQ symbol '''
@@ -27,15 +23,12 @@ def map_iq(i_bits: list[int], q_bits: list[int]) -> tuple[float]:
     return i*2, q*2
 
 
-# loop over all possible bit combinations i.e. (0,0),(0,1),(1,0),(1,1)
-# and generate lists of IQ symbols and IQ waveforms
+# iterate over all combinations of I and Q bits to generate symbols
 iq_symbols = []
-for bits in product((0, 1), repeat=n):
-    i, q = map_iq(*split_bits(bits))
-    iq_symbols.append((i, q))
+for i_bits in product((0, 1), repeat=n-n//2):
+    for q_bits in product((0, 1), repeat=n//2):
+        iq_symbols.append(map_iq(i_bits, q_bits))
 
-# ensure that symbols appear in the correct order in grid
-iq_symbols.sort()
 
 iq_waves = []
 for iq in iq_symbols:
