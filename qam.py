@@ -6,7 +6,7 @@ time = np.arange(0, 200 * np.pi) / 50
 
 # Number of bits per QAM symbol
 n = 4
-noise_level = 0.2
+noise_level = 0.0
 
 def map_iq(i_bits: list[int], q_bits: list[int]) -> complex:
     ''' takes in-phase and quadrature bits to generate a complex IQ symbol '''
@@ -27,7 +27,7 @@ def map_iq(i_bits: list[int], q_bits: list[int]) -> complex:
 # n//2 bits are assigned to Q and the rest to I (equal exept in case of odd n)
 iq_symbols: list[complex] = []
 for i_bits in product((0, 1), repeat=n-n//2):
-    for q_bits in product((0, 1), repeat=n//2):
+    for q_bits in reversed(list(product((0, 1), repeat=n//2,))):
         iq_symbols.append(map_iq(i_bits, q_bits))
 
 
